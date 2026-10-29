@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BidSure AI — 2:30 Minute Executive Video Demonstration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: radial-gradient(circle at 50% 20%, #1e1b4b 0%, #09090b 100%);
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    .video-viewport {
+      width: 100%;
+      max-width: 1100px;
+      aspect-ratio: 16 / 9;
+      background: #0f172a;
+      border-radius: 28px;
+      border: 3px solid rgba(244, 63, 94, 0.4);
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(244, 63, 94, 0.2);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .screen-stage {
+      flex: 1;
+      padding: 36px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 5;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      width: fit-content;
+    }
+    .badge-red { background: rgba(244, 63, 94, 0.2); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.4); }
+    .badge-blue { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
+    .badge-amber { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .badge-green { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .scene-title {
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #ffffff 40%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .scene-description {
+      font-size: 15.5px;
+      line-height: 1.6;
+      color: #94a3b8;
+      max-width: 860px;
+      margin-bottom: 24px;
+    }
+    .visual-card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .visual-chip {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 16px;
+      transition: all 0.3s;
+    }
+    .chip-label { font-size: 10px; color: #64748b; font-weight: 800; text-transform: uppercase; margin-bottom: 4px; }
+    .chip-val { font-size: 13.5px; font-weight: 800; color: #f1f5f9; }
+    .chip-highlight { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: #38bdf8; margin-top: 4px; }
+
+    /* Teleprompter Subtitles */
+    .teleprompter {
+      background: rgba(15, 23, 42, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 14.5px;
+      color: #fde68a;
+      font-style: italic;
+      line-height: 1.5;
+      min-height: 72px;
+    }
+
+    /* Player Controls */
+    .control-deck {
+      background: #020617;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .btn {
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: linear-gradient(135deg, #f43f5e 0%, #6366f1 100%); color: white; }
+    .btn-secondary { background: rgba(255, 255, 255, 0.08); color: #cbd5e1; }
+    .btn-secondary:hover { background: rgba(255, 255, 255, 0.16); color: white; }
+    .btn-green { background: #059669; color: white; }
+    .timeline-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      overflow: hidden;
+    }
+    .timeline-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #f43f5e, #fbbf24, #10b981);
+      transition: width 0.2s linear;
+    }
+    .timer-display { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: #f43f5e; }
+  </style>
+</head>
+<body>
+
+  <div class="video-viewport">
+    
+    <!-- Active Slide Stage -->
+    <div class="screen-stage" id="screenStage">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- Subtitles Teleprompter -->
+    <div class="teleprompter">
+      <span style="font-size: 18px;">🎙️</span>
+      <div id="subtitlesText">Welcome to BidSure AI, an enterprise forensic procurement platform.</div>
+    </div>
+
+    <!-- Timeline Progress -->
+    <div class="timeline-bar">
+      <div class="timeline-fill" id="timelineFill"></div>
+    </div>
+
+    <!-- Control Deck -->
+    <div class="control-deck">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <button class="btn btn-secondary" onclick="prevScene()">⏮ Prev</button>
+        <button class="btn btn-primary" id="playBtn" onclick="togglePlay()">⏸ Pause</button>
+        <button class="btn btn-secondary" onclick="nextScene()">⏭ Next</button>
+        <button class="btn btn-secondary" onclick="restart()">🔄 Restart</button>
+        <button class="btn btn-secondary" id="muteBtn" onclick="toggleMute()">🔊 Voice: ON</button>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div class="timer-display" id="timeDisplay">00:00 / 02:30</div>
+        <a href="http://localhost:5173" target="_blank" class="btn btn-secondary" style="text-decoration: none;">🚀 Open Live App</a>
+      </div>
+    </div>
+
+  </div>
+
+  <audio id="audioElement" preload="auto" crossOrigin="anonymous"></audio>
+
+  <script>
+    const SCENES = [
+      {
+        id: 1,
+        title: "Scene 1: Public Procurement Problem & BidSure AI Overview",
+        badge: "00:00 - 00:25 | Enterprise Integrity Platform",
+        badgeClass: "badge-red",
+        audio: "public/audio/scene1.wav",
+        fallbackAudio: "/audio/scene1.wav",
+        narration: "Welcome to BidSure AI, an enterprise forensic procurement platform designed to eliminate corruption, bid rigging, and fraudulent cartels in public infrastructure tenders. Government authorities worldwide invest billions of dollars in critical infrastructure projects, yet conventional procurement portals cannot detect covert syndicates. BidSure AI transforms procurement integrity by automating General Financial Rules compliance, cross-bidder forensic analysis, and cryptographic auditability.",
+        chips: [
+          { label: "Core Mandate", val: "GFR 2017 Rule 173 Compliance", highlight: "Two-Cover Public Bidding" },
+          { label: "AI Forensics", val: "Cross-Bidder Hash Collision", highlight: "SHA-256 Byte Verification" },
+          { label: "Integrity Stack", val: "Knowledge Graph + Metadata", highlight: "100% Free SQLite + Python" }
+        ]
+      },
+      {
+        id: 2,
+        title: "Scene 2: Role 1 — Government Authority & Tender Creation",
+        badge: "00:25 - 00:50 | Sovereign Tender Notice",
+        badgeClass: "badge-amber",
+        audio: "public/audio/scene2.wav",
+        fallbackAudio: "/audio/scene2.wav",
+        narration: "In our first role, the Government Authority creates and publishes competitive public tenders. Here, we observe the Mumbai Metropolitan Region Development Authority's Metro Line 4 elevated viaduct project, valued at 485.5 Crores. The procuring authority configures mandatory GFR Rule 173 standards, including an audited annual turnover threshold of 145 Crores, bank solvency limits, and a one percent bank guarantee for earnest money deposit.",
+        chips: [
+          { label: "Published Project", val: "MMRDA Metro Line 4 Elevated Viaduct", highlight: "TND-2026-8901 (₹ 485.50 Cr)" },
+          { label: "Statutory Criteria", val: "Avg Annual Turnover ≥ ₹ 145 Cr", highlight: "CA Certified UDIN Validated" },
+          { label: "EMD Guarantee", val: "₹ 4.85 Cr Bank Guarantee", highlight: "1% Strict SFMS Submission" }
+        ]
+      },
+      {
+        id: 3,
+        title: "Scene 3: Role 2 — Contractor Portal & Strict Zero-Knowledge Privacy",
+        badge: "00:50 - 01:15 | Strict Bidder Anonymity",
+        badgeClass: "badge-blue",
+        audio: "public/audio/scene3.wav",
+        fallbackAudio: "/audio/scene3.wav",
+        narration: "In our second role, contractors access dedicated, confidential bidding dashboards. Strict privacy boundaries are enforced by design. Notice that contractor BuildCraft can inspect tender specifications and only an aggregate count indicating that three contractors have submitted bids. Competitor names, technical methodologies, and commercial quotes remain completely concealed, preventing illegal price discovery or premature collusion.",
+        chips: [
+          { label: "Active Contractor", val: "BuildCraft Infra Projects Ltd (CTR-002)", highlight: "CIN: U45203MH2016PTC284911" },
+          { label: "Competitor Privacy", val: "Competitor Names & Quotes Masked", highlight: "Only Bid Count (3 Submitted)" },
+          { label: "Own Proposal", val: "Technical + Commercial Quote", highlight: "₹ 468.20 Cr Clean Proposal" }
+        ]
+      },
+      {
+        id: 4,
+        title: "Scene 4: Role 3 — Procurement Officer & Cryptographic Duplicate Detection",
+        badge: "01:15 - 01:40 | SHA-256 Collusion Detection",
+        badgeClass: "badge-red",
+        audio: "public/audio/scene4.wav",
+        fallbackAudio: "/audio/scene4.wav",
+        narration: "In our third role, the Procurement Officer activates automated AI forensics. BidSure AI scans all submitted proposals and computes SHA-256 cryptographic fingerprints. The engine instantly uncovers a critical anomaly: Apex Infrastructure and Shivalik Heavy Engineering submitted byte-for-byte identical technical methodology files with identical 256-bit hashes, proving an active cover-bidding syndicate.",
+        chips: [
+          { label: "Collision Alert", val: "FIND-2026-081: Exact File Duplicate", highlight: "SHA-256: 4b82d3e0ff48...04bb1" },
+          { label: "Syndicate Entities", val: "Apex Infrastructure & Shivalik Corp", highlight: "Identical Technical Methodology" },
+          { label: "Forensic Evidence", val: "100% Lexical & Structural Match", highlight: "Violation of Competition Act" }
+        ]
+      },
+      {
+        id: 5,
+        title: "Scene 5: Cartel Knowledge Graph & Workstation Forensics",
+        badge: "01:40 - 02:05 | Entity Network & EXIF",
+        badgeClass: "badge-amber",
+        audio: "public/audio/scene5.wav",
+        fallbackAudio: "/audio/scene5.wav",
+        narration: "Our interactive Cartel Knowledge Graph visually maps the corporate syndicate network. The system reveals that Apex and Shivalik share the exact same tax registration PAN and a common board director. Furthermore, deep workstation metadata confirms that both competing proposals were authored on the exact same laptop by the same user, created just three minutes apart from the same Nariman Point internet gateway.",
+        chips: [
+          { label: "Shared Tax ID", val: "PAN: AAACA7821B (Shared Entity)", highlight: "Direct Sister-Concern Link" },
+          { label: "Common Board Member", val: "Director Rajesh Singhania (DIN 08412901)", highlight: "Dual Directorship Confirmed" },
+          { label: "Workstation Fingerprint", val: "Authored on LAPTOP-INFR-08", highlight: "Created 3 Mins Apart by r.sharma" }
+        ]
+      },
+      {
+        id: 6,
+        title: "Scene 6: CST Evaluation Matrix, Disqualification & Sealed Award",
+        badge: "02:05 - 02:30 | Legitimate L1 & Sealed LoA",
+        badgeClass: "badge-green",
+        audio: "public/audio/scene6.wav",
+        fallbackAudio: "/audio/scene6.wav",
+        narration: "Finally, the Comparative Statement of Tenders synthesizes all statutory and financial findings. Although Apex submitted the lowest commercial quote of 442 Crores, BidSure AI automatically disqualifies them for cartel collusion under GFR Rule 173. The contract is rightfully awarded to legitimate L1 contractor BuildCraft for 468 Crores, and cryptographically sealed with an immutable Letter of Acceptance.",
+        chips: [
+          { label: "Flawed L1 Disqualified", val: "Apex Infra (₹ 442.80 Cr) Disqualified", highlight: "Cover Bidding Rigging Blocked" },
+          { label: "Clean Awardee", val: "BuildCraft Infra Projects (₹ 468.20 Cr)", highlight: "Promoted to Legitimate L1" },
+          { label: "Contract Sealing", val: "Letter of Acceptance (LoA) Issued", highlight: "Tamper-Proof SHA-256 Seal Stamp" }
+        ]
+      }
+    ];
+
+    let currentIdx = 0;
+    let elapsed = 0;
+    let isPlaying = true;
+    let isMuted = false;
+    let timer = null;
+    const totalSecs = 150; // 2 minutes and 30 seconds
+
+    const stage = document.getElementById('screenStage');
+    const subtitles = document.getElementById('subtitlesText');
+    const timeline = document.getElementById('timelineFill');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const audio = document.getElementById('audioElement');
+    const playBtn = document.getElementById('playBtn');
+    const muteBtn = document.getElementById('muteBtn');
+
+    // Web Audio Routing Pipeline
+    let audioCtx = null;
+    let audioDest = null;
+    let audioSource = null;
+
+    function initAudioPipeline() {
+      if (!audioCtx) {
+        try {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          audioCtx = new AudioCtx();
+          audioDest = audioCtx.createMediaStreamDestination();
+          audioSource = audioCtx.createMediaElementSource(audio);
+          
+          // Connect to both internal stream recorder destination and user speakers
+          audioSource.connect(audioDest);
+          audioSource.connect(audioCtx.destination);
+        } catch (e) {
+          console.warn('Web Audio routing note:', e);
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function renderScene(idx) {
+      const s = SCENES[idx];
+      stage.innerHTML = `
+        <div>
+          <span class="badge-pill ${s.badgeClass}">${s.badge}</span>
+          <h2 class="scene-title">${s.title}</h2>
+          <p class="scene-description">${s.narration}</p>
+        </div>
+        <div class="visual-card-grid">
+          ${s.chips.map(c => `
+            <div class="visual-chip">
+              <div class="chip-label">${c.label}</div>
+              <div class="chip-val">${c.val}</div>
+              <div class="chip-highlight">${c.highlight}</div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      subtitles.textContent = s.narration;
+      playAudio(s.audio, s.fallbackAudio, s.narration);
+    }
+
+    function playAudio(src, fallbackSrc, speechText) {
+      if (isMuted) return;
+      initAudioPipeline();
+
+      audio.pause();
+      audio.src = src;
+      audio.currentTime = 0;
+
+      audio.play().catch(err => {
+        // Try fallback source or Web Speech API
+        if (fallbackSrc) {
+          audio.src = fallbackSrc;
+          audio.play().catch(() => speakFallback(speechText));
+        } else {
+          speakFallback(speechText);
+        }
+      });
+    }
+
+    function speakFallback(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.rate = 1.0;
+        window.speechSynthesis.speak(utter);
+      }
+    }
+
+    function tick() {
+      if (!isPlaying) return;
+      elapsed++;
+      if (elapsed >= totalSecs) {
+        elapsed = totalSecs;
+        pause();
+      }
+      const newIdx = Math.min(5, Math.floor(elapsed / 25));
+      if (newIdx !== currentIdx) {
+        currentIdx = newIdx;
+        renderScene(currentIdx);
+      }
+      updateUI();
+    }
+
+    function updateUI() {
+      const pct = (elapsed / totalSecs) * 100;
+      timeline.style.width = `${pct}%`;
+      const m = Math.floor(elapsed / 60);
+      const s = elapsed % 60;
+      timeDisplay.textContent = `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s} / 02:30`;
+    }
+
+    function togglePlay() {
+      if (isPlaying) { pause(); } else { play(); }
+    }
+
+    function pause() {
+      isPlaying = false;
+      clearInterval(timer);
+      audio.pause();
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      playBtn.textContent = '▶ Play';
+    }
+
+    function play() {
+      isPlaying = true;
+      initAudioPipeline();
+      timer = setInterval(tick, 1000);
+      audio.play().catch(e => {});
+      playBtn.textContent = '⏸ Pause';
+    }
+
+    function nextScene() {
+      if (currentIdx < 5) {
+        currentIdx++;
+        elapsed = currentIdx * 25;
+        renderScene(currentIdx);
+        updateUI();
+      }
+    }
+
+    function prevScene() {
+      if (currentIdx > 0) {
+        currentIdx--;
+        elapsed = currentIdx * 25;
+        renderScene(currentIdx);
+        updateUI();
+      }
+    }
+
+    function restart() {
+      currentIdx = 0;
+      elapsed = 0;
+      renderScene(0);
+      updateUI();
+      play();
+    }
+
+    function toggleMute() {
+      isMuted = !isMuted;
+      if (isMuted) {
+        audio.pause();
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        muteBtn.textContent = '🔇 Voice: OFF';
+      } else {
+        muteBtn.textContent = '🔊 Voice: ON';
+        playAudio(SCENES[currentIdx].audio, SCENES[currentIdx].fallbackAudio, SCENES[currentIdx].narration);
+      }
+    }
+
+    // Initialize on page load
+    renderScene(0);
+    timer = setInterval(tick, 1000);
+  </script>
+</body>
+</html>

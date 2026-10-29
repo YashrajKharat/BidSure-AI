@@ -1,0 +1,82 @@
+# ==========================================
+# BidSure AI - Security & Build .gitignore
+# ==========================================
+
+# 1. Credentials, Secrets & Environment Variables (STRICTLY FORBIDDEN)
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
+
+# Secret keys, private certificates & tokens
+*.pem
+*.key
+*.pfx
+*.p12
+*.cer
+*.crt
+id_rsa*
+*.pub
+*secret*.json
+*credentials*.json
+serviceAccountKey*.json
+google-services.json
+firebase*.json
+.aws/
+.gcp/
+.azure/
+
+# 2. Local Databases & Volatile Runtime Storage
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+bidsure.db
+
+# 3. User Uploads & Generated Audit PDF Reports (Preserves Directory Structure)
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/reports/*
+!backend/reports/.gitkeep
+
+# 4. Node.js & Frontend Build Outputs
+node_modules/
+dist/
+build/
+out/
+.vite/
+.npm/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 5. Python & Backend Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+.pytest_cache/
+*.egg-info/
+.eggs/
+
+# 6. Operating System & IDE Files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
